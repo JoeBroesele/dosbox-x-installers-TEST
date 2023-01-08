@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dosbox-x-win32-${{ env.DOSBOX_X_RELEASE}}-setup.exe
-          path: release\windows\dosbox-x-win32-${{ envDOSBOX_X_RELEASE}}-setup.exe
+          path: release\windows\dosbox-x-win32-${{ env.DOSBOX_X_RELEASE}}-setup.exe
       - name: Upload DOSBox-X  Windows 64 bit installer.
         uses: actions/upload-artifact@v3
         with:
