@@ -17,6 +17,8 @@ jobs:
           path: .
       - name: Get DOSBox-X Windows builds.
         run: |
+          pwd
+          dir
           Get-Location
           $RELEASE_DIR = "release\windows"
           New-Item -ItemType Directory -Force -Path $RELEASE_DIR
