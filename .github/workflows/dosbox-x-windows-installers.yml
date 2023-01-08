@@ -9,7 +9,7 @@ jobs:
   build-dosbox-x-windows-installers:
     runs-on: windows-2022
     env:
-      DOSBOX_X_RELEASE: 2022.12.26
+      DOSBOX_X_RELEASE: '2022.12.26'
     steps:
 #      - uses: actions/checkout@v3
 #        with:
@@ -21,9 +21,6 @@ jobs:
           New-Item -ItemType Directory -Force -Path $RELEASE_DIR
           Push-Location
           cd $RELEASE_DIR
-          echo $DOSBOX_X_RELEASE
-          echo https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-20221227040728.zip
-          Start-BitsTransfer -Source foo/${{ env.DOSBOX_X_RELEASE }}
           Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win32-20221227040728.zip
           Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win32-lowend-20221227040427.zip
           Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win64-20221227040641.zip
