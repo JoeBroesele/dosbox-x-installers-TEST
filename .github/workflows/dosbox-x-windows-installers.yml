@@ -11,10 +11,10 @@ jobs:
     env:
       DOSBOX_X_RELEASE: 2022.12.26
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: joncampbell123/dosbox-x
-          path: .
+#      - uses: actions/checkout@v3
+#        with:
+#          repository: joncampbell123/dosbox-x
+#          path: .
       - name: Get DOSBox-X Windows builds.
         run: |
           $RELEASE_DIR = "release\windows"
