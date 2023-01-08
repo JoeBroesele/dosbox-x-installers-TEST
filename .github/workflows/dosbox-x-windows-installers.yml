@@ -10,6 +10,7 @@ jobs:
     runs-on: windows-2022
     env:
       DOSBOX_X_RELEASE: '2022.12.26'
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v3
         with:
