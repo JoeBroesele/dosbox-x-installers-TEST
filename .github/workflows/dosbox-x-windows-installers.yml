@@ -1,8 +1,8 @@
 name: Build DOSBox-X Windows installers
 
 on:
-#  push:
-#    branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -34,16 +34,16 @@ jobs:
           Pop-Location
       - name: Build DOSBox-X Windows installers.
         run: |
-          $INSTALLER_DATE = echo $DOSBOX_X_RELEASE | % { $_ -replace '\.', '' }
-          .\build_windows_installer.bat 20221226
+          $INSTALLER_DATE = echo ${{ env.DOSBOX_X_RELEASE}} | % { $_ -replace '\.', '' }
+          .\build_windows_installer.bat $INSTALLER_DATE
       - name: Upload DOSBox-X Windows 32 bit installer.
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
-          path: release\windows\dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
+          name: dosbox-x-win32-${{ env.DOSBOX_X_RELEASE}}-setup.exe
+          path: release\windows\dosbox-x-win32-${{ envDOSBOX_X_RELEASE}}-setup.exe
       - name: Upload DOSBox-X  Windows 64 bit installer.
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: dosbox-x-win64-$DOSBOX_X_RELEASE-setup.exe
-          path: release\windows\dosbox-x-win64-$DOSBOX_X_RELEASE-setup.exe
+          name: dosbox-x-win64-${{ env.DOSBOX_X_RELEASE}}-setup.exe
+          path: release\windows\dosbox-x-win64-${{ env.DOSBOX_X_RELEASE}}-setup.exe
 
