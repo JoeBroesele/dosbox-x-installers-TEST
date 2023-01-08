@@ -8,8 +8,8 @@ on:
 jobs:
   build-dosbox-x-windows-installers:
     runs-on: windows-2022
-    env:
-      GH_TOKEN: ${{ github.token }}
+#    env:
+#      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Set the value
         id: step_one
@@ -19,6 +19,7 @@ jobs:
         id: step_two
         run: |
           echo "${{ env.action_state }}" # This will output 'yellow'
+          echo "foo"
 #      - uses: actions/checkout@v3
 #        with:
 #          repository: joncampbell123/dosbox-x
