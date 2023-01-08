@@ -21,9 +21,9 @@ jobs:
       - name: Get DOSBox-X Windows builds.
         shell: bash
         run: |
-          $DOSBOX_X_RELEASE=`gh release --repo joncampbell123/dosbox-x list -L1 | awk '{print $3}' | sed -e "s/-/./g"`
+          DOSBOX_X_RELEASE=`gh release --repo joncampbell123/dosbox-x list -L1 | awk '{print $3}' | sed -e "s/-/./g"`
           echo "DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE" >> $GITHUB_ENV
-          $RELEASE_DIR = "release\windows"
+          RELEASE_DIR = "release\windows"
           mkdir -p $RELEASE_DIR
           cd $RELEASE_DIR
           gh release --repo joncampbell123/dosbox-x download -p 'dosbox-x-mingw-win*.zip' -p 'dosbox-x-vsbuild-*.zip'
