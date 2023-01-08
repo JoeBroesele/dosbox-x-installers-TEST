@@ -16,9 +16,11 @@ jobs:
         run: |
           echo "action_state=yellow" >> $GITHUB_ENV
           echo "State is: '${{ env.action_state }}'" # No output since same step
+          echo "timestamp=`date +%F-%T | sed -e 's/:/-/g' | sed -e 's/-//g'`" >> $GITHUB_ENV
       - name: Step 2
         run: |
           echo "State is: '${{ env.action_state }}'" # Output works
+          echo "State is: '${{ env.timestamp }}'" # Output works
 ####      - uses: actions/checkout@v3
 ####        with:
 ####          repository: joncampbell123/dosbox-x
