@@ -10,12 +10,15 @@ jobs:
     runs-on: windows-latest
     env:
       GH_TOKEN: ${{ github.token }}
+    outputs:
+      output1: ${{ steps.get-latest-release.outputs.DOSBOX_X_RELEASE }}
     steps:
       - name: Get DOSBox-X latest release.
+        id: get-latest-release
         run: |
           $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
           $DOSBOX_X_RELEASE = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
-          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $env:GITHUB_ENV
+          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $GITHUB_OUTPUT
   build-dosbox-x-windows-installers:
     needs: get-dosbox-x-latest-release
     runs-on: windows-latest
@@ -40,7 +43,7 @@ jobs:
 #          Pop-Location
       - name: Build DOSBox-X Windows installers.
         run: |
-          $INSTALLER_DATE = echo ${{ env.DOSBOX_X_RELEASE }} | % { $_ -replace '\.', '' }
+          $INSTALLER_DATE = echo ${{ needs.get-dosbox-x-latest-release.outputs.DOSBOX_X_RELEASE }} | % { $_ -replace '\.', '' }
           .\build_windows_installer.bat $INSTALLER_DATE
       - name: Upload DOSBox-X Windows 32 bit installer.
         uses: actions/upload-artifact@v3
