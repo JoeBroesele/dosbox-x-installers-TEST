@@ -19,7 +19,7 @@ jobs:
         run: |
           $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
           $DOSBOX_X_RELEASE_LOCAL = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
-          echo "DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE_LOCAL" >> $GITHUB_ENV
+          echo DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE_LOCAL >> $GITHUB_ENV
           $RELEASE_DIR = "release\windows"
           New-Item -ItemType Directory -Force -Path $RELEASE_DIR
           Push-Location
