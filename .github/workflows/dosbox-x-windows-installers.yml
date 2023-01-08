@@ -18,10 +18,8 @@ jobs:
       - name: Get DOSBox-X Windows builds.
         run: |
           $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
-          echo $DOSBOX_X_RELEASE_LATEST
-          $DOSBOX_X_RELEASE_LOCAL = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
-          echo $DOSBOX_X_RELEASE_LOCAL | % { $_ -replace '\.', '' }
-          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE_LOCAL" >> $env:GITHUB_ENV
+          $DOSBOX_X_RELEASE = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
+          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $env:GITHUB_ENV
           $RELEASE_DIR = "release\windows"
 #          New-Item -ItemType Directory -Force -Path $RELEASE_DIR
 #          Push-Location
