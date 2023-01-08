@@ -9,7 +9,6 @@ jobs:
   build-dosbox-x-windows-installers:
     runs-on: windows-2022
     env:
-      DOSBOX_X_RELEASE: '2022.12.26'
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v3
@@ -18,6 +17,9 @@ jobs:
           path: .
       - name: Get DOSBox-X Windows builds.
         run: |
+          $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
+          $DOSBOX_X_RELEASE = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
+          echo "DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE" >> $GITHUB_ENV
           $RELEASE_DIR = "release\windows"
           New-Item -ItemType Directory -Force -Path $RELEASE_DIR
           Push-Location
