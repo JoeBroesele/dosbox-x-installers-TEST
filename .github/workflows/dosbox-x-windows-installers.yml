@@ -7,9 +7,6 @@ on:
 
 jobs:
   build-dosbox-x-windows-installers:
-    permissions:
-      actions: write
-      contents: write
     runs-on: windows-latest
     env:
       GH_TOKEN: ${{ github.token }}
@@ -17,45 +14,36 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Set the value
-        id: step_one
+      - uses: actions/checkout@v3
+        with:
+          repository: joncampbell123/dosbox-x
+          path: .
+      - name: Get DOSBox-X Windows builds.
         run: |
-          echo "action_state=yellow" >> $GITHUB_ENV
-      - name: Use the value
-        id: step_two
+          shell: bash
+          $DOSBOX_X_RELEASE=`gh release --repo joncampbell123/dosbox-x list -L1 | awk '{print $3}' | sed -e "s/-/./g"`
+          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $GITHUB_ENV
+          $RELEASE_DIR = "release\windows"
+          mkdir -p $RELEASE_DIR
+          cd $RELEASE_DIR
+          gh release --repo joncampbell123/dosbox-x download -p 'dosbox-x-mingw-win*.zip' -p 'dosbox-x-vsbuild-*.zip'
+          # The renaming should not be necessary, as all builds should have the same timestamp.
+          mv dosbox-x-mingw-win32-20221227040728.zip dosbox-x-mingw-win32-20221226190454.zip
+          mv dosbox-x-mingw-win32-lowend-20221227040427.zip dosbox-x-mingw-win32-lowend-20221226190454.zip
+          mv dosbox-x-mingw-win64-20221227040641.zip dosbox-x-mingw-win64-20221226190454.zip
+      - name: Build DOSBox-X Windows installers.
+        shell: pwsh
         run: |
-          echo "${{ env.action_state }}" # This will output 'yellow'
-#      - uses: actions/checkout@v3
-#        with:
-#          repository: joncampbell123/dosbox-x
-#          path: .
-#      - name: Get DOSBox-X Windows builds.
-#        run: |
-#          $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
-#          $DOSBOX_X_RELEASE = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
-#          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $env:GITHUB_ENV
-#          $RELEASE_DIR = "release\windows"
-#          New-Item -ItemType Directory -Force -Path $RELEASE_DIR
-#          Push-Location
-#          cd $RELEASE_DIR
-#          gh release --repo joncampbell123/dosbox-x download -p 'dosbox-x-mingw-win*.zip' -p 'dosbox-x-vsbuild-*.zip'
-#          # The renaming should not be necessary, as all builds should have the same timestamp.
-#          ren dosbox-x-mingw-win32-20221227040728.zip dosbox-x-mingw-win32-20221226190454.zip
-#          ren dosbox-x-mingw-win32-lowend-20221227040427.zip dosbox-x-mingw-win32-lowend-20221226190454.zip
-#          ren dosbox-x-mingw-win64-20221227040641.zip dosbox-x-mingw-win64-20221226190454.zip
-#          Pop-Location
-#      - name: Build DOSBox-X Windows installers.
-#        run: |
-#          $INSTALLER_DATE = echo ${{ env.DOSBOX_X_RELEASE }} | % { $_ -replace '\.', '' }
-#          .\build_windows_installer.bat $INSTALLER_DATE
-#      - name: Upload DOSBox-X Windows 32 bit installer.
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
-#          path: release\windows\dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
-#      - name: Upload DOSBox-X  Windows 64 bit installer.
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
-#          path: release\windows\dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
+          $INSTALLER_DATE = echo ${{ env.DOSBOX_X_RELEASE }} | % { $_ -replace '\.', '' }
+          .\build_windows_installer.bat $INSTALLER_DATE
+      - name: Upload DOSBox-X Windows 32 bit installer.
+        uses: actions/upload-artifact@v3
+        with:
+          name: dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
+          path: release\windows\dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
+      - name: Upload DOSBox-X Windows 64 bit installer.
+        uses: actions/upload-artifact@v3
+        with:
+          name: dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
+          path: release\windows\dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
 
