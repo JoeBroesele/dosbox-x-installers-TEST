@@ -1,0 +1,51 @@
+name: DOSBox-X Windows installers
+
+on:
+#  push:
+#    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-dosbox-x-windows-installers:
+    runs-on: windows-2022
+    env:
+      DOSBOX_X_RELEASE: 2022.12.26
+    steps:
+      - uses: actions/checkout@v3
+        repository: https://github.com/joncampbell123/dosbox-x
+        path: dosbox-x
+      - name: Get DOSBox-X Windows builds.
+        run: |
+          cd dosbox-x
+          Get-Location
+          $RELEASE_DIR = "release\windows"
+          New-Item -ItemType Directory -Force -Path $RELEASE_DIR
+          Push-Location
+          cd $RELEASE_DIR
+          Get-Location
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-20221227040728.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-lowend-20221227040427.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win64-20221227040641.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-arm32-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-arm64-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-win32-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-win64-20221226190454.zip
+          ren dosbox-x-mingw-win32-20221227040728.zip dosbox-x-mingw-win32-20221226190454.zip
+          ren dosbox-x-mingw-win32-lowend-20221227040427.zip dosbox-x-mingw-win32-lowend-20221226190454.zip
+          ren dosbox-x-mingw-win64-20221227040641.zip dosbox-x-mingw-win64-20221226190454.zip
+          Pop-Location
+      - name: Build Windows installers.
+        run: |
+          $INSTALLER_DATE = echo $DOSBOX_X_RELEASE | % { $_ -replace '\.', '' }
+          .\build_windows_installer.bat 20221226
+      - name: Upload Windows 32 bit installer.
+        uses: actions/upload-artifact@v2
+        with:
+          name: dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
+          path: release\windows\dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
+      - name: Upload Windows 64 bit installer.
+        uses: actions/upload-artifact@v2
+        with:
+          name: dosbox-x-win64-$DOSBOX_X_RELEASE-setup.exe
+          path: release\windows\dosbox-x-win64-$DOSBOX_X_RELEASE-setup.exe
+
