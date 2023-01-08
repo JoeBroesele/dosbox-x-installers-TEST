@@ -14,15 +14,15 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: joncampbell123/dosbox-x
-          path: .
+#      - uses: actions/checkout@v3
+#        with:
+#          repository: joncampbell123/dosbox-x
+#          path: .
       - name: Get DOSBox-X Windows builds.
         shell: bash
         run: |
           $DOSBOX_X_RELEASE=`gh release --repo joncampbell123/dosbox-x list -L1 | awk '{print $3}' | sed -e "s/-/./g"`
-          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $GITHUB_ENV
+          echo "DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE" >> $GITHUB_ENV
           $RELEASE_DIR = "release\windows"
           mkdir -p $RELEASE_DIR
           cd $RELEASE_DIR
