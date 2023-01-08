@@ -18,7 +18,8 @@ jobs:
         run: |
           $DOSBOX_X_RELEASE_LATEST = gh release --repo joncampbell123/dosbox-x list -L1
           $DOSBOX_X_RELEASE = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
-          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $GITHUB_OUTPUT
+          echo "DOSBOX_X_RELEASE=DOSBOX_X_RELEASE" >> $env:GITHUB_OUTPUT
+
   build-dosbox-x-windows-installers:
     needs: get-dosbox-x-latest-release
     runs-on: windows-latest
