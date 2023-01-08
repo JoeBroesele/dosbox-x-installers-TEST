@@ -14,10 +14,10 @@ jobs:
       run:
         shell: bash
     steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          repository: joncampbell123/dosbox-x
-#          path: .
+      - uses: actions/checkout@v3
+        with:
+          repository: joncampbell123/dosbox-x
+          path: .
       - name: Get DOSBox-X Windows builds.
         shell: bash
         run: |
