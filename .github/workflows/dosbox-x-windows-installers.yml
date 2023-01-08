@@ -1,4 +1,4 @@
-name: DOSBox-X Windows installers
+name: Build DOSBox-X Windows installers
 
 on:
 #  push:
@@ -23,27 +23,27 @@ jobs:
           cd $RELEASE_DIR
           echo $DOSBOX_X_RELEASE
           echo https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-20221227040728.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-20221227040728.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win32-lowend-20221227040427.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-mingw-win64-20221227040641.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-arm32-20221226190454.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-arm64-20221226190454.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-win32-20221226190454.zip
-          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v$DOSBOX_X_RELEASE/dosbox-x-vsbuild-win64-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win32-20221227040728.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win32-lowend-20221227040427.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-mingw-win64-20221227040641.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-vsbuild-arm32-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-vsbuild-arm64-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-vsbuild-win32-20221226190454.zip
+          Start-BitsTransfer -Source https://github.com/joncampbell123/dosbox-x/releases/download/dosbox-x-v${{ env.DOSBOX_X_RELEASE }}/dosbox-x-vsbuild-win64-20221226190454.zip
           ren dosbox-x-mingw-win32-20221227040728.zip dosbox-x-mingw-win32-20221226190454.zip
           ren dosbox-x-mingw-win32-lowend-20221227040427.zip dosbox-x-mingw-win32-lowend-20221226190454.zip
           ren dosbox-x-mingw-win64-20221227040641.zip dosbox-x-mingw-win64-20221226190454.zip
           Pop-Location
-      - name: Build Windows installers.
+      - name: Build DOSBox-X Windows installers.
         run: |
           $INSTALLER_DATE = echo $DOSBOX_X_RELEASE | % { $_ -replace '\.', '' }
           .\build_windows_installer.bat 20221226
-      - name: Upload Windows 32 bit installer.
+      - name: Upload DOSBox-X Windows 32 bit installer.
         uses: actions/upload-artifact@v2
         with:
           name: dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
           path: release\windows\dosbox-x-win32-$DOSBOX_X_RELEASE-setup.exe
-      - name: Upload Windows 64 bit installer.
+      - name: Upload DOSBox-X  Windows 64 bit installer.
         uses: actions/upload-artifact@v2
         with:
           name: dosbox-x-win64-$DOSBOX_X_RELEASE-setup.exe
