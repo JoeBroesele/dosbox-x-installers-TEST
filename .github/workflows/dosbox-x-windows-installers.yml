@@ -14,10 +14,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: joncampbell123/dosbox-x
-          path: dosbox-x
+          path: .
       - name: Get DOSBox-X Windows builds.
         run: |
-          cd dosbox-x
           Get-Location
           $RELEASE_DIR = "release\windows"
           New-Item -ItemType Directory -Force -Path $RELEASE_DIR
