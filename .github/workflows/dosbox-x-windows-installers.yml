@@ -12,8 +12,9 @@ jobs:
       DOSBOX_X_RELEASE: 2022.12.26
     steps:
       - uses: actions/checkout@v3
-        repository: https://github.com/joncampbell123/dosbox-x
-        path: dosbox-x
+        with:
+          repository: https://github.com/joncampbell123/dosbox-x
+          path: dosbox-x
       - name: Get DOSBox-X Windows builds.
         run: |
           cd dosbox-x
