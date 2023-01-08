@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: https://github.com/joncampbell123/dosbox-x
+          repository: joncampbell123/dosbox-x
           path: dosbox-x
       - name: Get DOSBox-X Windows builds.
         run: |
