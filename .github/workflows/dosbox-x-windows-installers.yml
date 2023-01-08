@@ -21,7 +21,7 @@ jobs:
           echo $DOSBOX_X_RELEASE_LATEST
           $DOSBOX_X_RELEASE_LOCAL = echo $DOSBOX_X_RELEASE_LATEST.Split(' ')[2] | % { $_ -replace '-', '.' }
           echo $DOSBOX_X_RELEASE_LOCAL | % { $_ -replace '\.', '' }
-          echo "DOSBOX_X_RELEASE=$DOSBOX_X_RELEASE_LOCAL" >> $GITHUB_ENV
+          echo "DOSBOX_X_RELEASE=foo.bar" >> $GITHUB_ENV
           echo ${{ env.DOSBOX_X_RELEASE}}
           $RELEASE_DIR = "release\windows"
 #          New-Item -ItemType Directory -Force -Path $RELEASE_DIR
