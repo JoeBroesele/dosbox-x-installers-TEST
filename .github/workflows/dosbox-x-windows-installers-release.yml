@@ -50,9 +50,9 @@ jobs:
         with:
           name: dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
           path: release\windows\dosbox-x-win64-${{ env.DOSBOX_X_RELEASE }}-setup.exe
-      - name: Create release
+      - name: Create release for DOSBox-X Windows installers ${{ env.DOSBOX_X_RELEASE }}
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -62,7 +62,7 @@ jobs:
           prerelease: false
       - name: "Upload release asset: Windows installer 32 bit"
         id: upload-release-asset-32-bit
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -72,7 +72,7 @@ jobs:
           asset_content_type: application/x-binary
       - name: "Upload release asset: Windows installer 64 bit"
         id: upload-release-asset-64-bit
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
