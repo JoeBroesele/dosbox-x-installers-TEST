@@ -60,7 +60,7 @@ jobs:
           release_name: DOSBox-X installers ${{ env.DOSBOX_X_RELEASE }}
           draft: false
           prerelease: false
-      - name: Upload release asset: Windows installer 32 bit
+      - name: "Upload release asset: Windows installer 32 bit"
         id: upload-release-asset-32-bit
         uses: actions/upload-release-asset@v1
         env:
@@ -70,7 +70,7 @@ jobs:
           asset_path: release\windows\dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
           asset_name: dosbox-x-win32-${{ env.DOSBOX_X_RELEASE }}-setup.exe
           asset_content_type: application/x-binary
-      - name: Upload release asset: Windows installer 64 bit
+      - name: "Upload release asset: Windows installer 64 bit"
         id: upload-release-asset-64-bit
         uses: actions/upload-release-asset@v1
         env:
